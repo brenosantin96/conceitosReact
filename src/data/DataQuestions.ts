@@ -11,7 +11,7 @@ export const DataQuestions: Question[] = [
             { id: 3, optionText: "Macaco" },
             { id: 4, optionText: "Baleia" },
         ],
-        correctAnswer: 4,
+        correctAnswer: 3,
         answered: false,
         actualQuestion: true,
         
@@ -25,7 +25,7 @@ export const DataQuestions: Question[] = [
             { id: 3, optionText: "Cavalo" },
             { id: 4, optionText: "Pombo" },
         ],
-        correctAnswer: 2,
+        correctAnswer: 1,
         answered: false,
         actualQuestion: false,
         
@@ -39,7 +39,7 @@ export const DataQuestions: Question[] = [
             { id: 3, optionText: "Dez" },
             { id: 4, optionText: "Doze" },
         ],
-        correctAnswer: 2,
+        correctAnswer: 1,
         answered: false,
         actualQuestion: false,
         
@@ -53,7 +53,7 @@ export const DataQuestions: Question[] = [
             { id: 3, optionText: "Diabo da Tasmânia" },
             { id: 4, optionText: "Dingo" },
         ],
-        correctAnswer: 1,
+        correctAnswer: 0,
         answered: false,
         actualQuestion: false,
         
@@ -67,7 +67,7 @@ export const DataQuestions: Question[] = [
             { id: 3, optionText: "150 anos" },
             { id: 4, optionText: "200 anos" },
         ],
-        correctAnswer: 3,
+        correctAnswer: 2,
         answered: false,
         actualQuestion: false,
         
