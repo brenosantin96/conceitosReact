@@ -32,8 +32,9 @@ export const QuestionComponent2 = ({ question, count, onAnswer }: Props) => {
                         className={
                             `p-2 mx-2 border border-blue-200 bg-blue-100 rounded-md my-3
                             
-                            ${selectedAnswer && selectedAnswer === question.correctAnswer && "border-green-200 bg-green-100"}
-                            ${selectedAnswer && selectedAnswer !== question.correctAnswer && "border-red-200 bg-red-100"}
+                            ${selectedAnswer !== null ? "cursor-auto" : "cursor-pointer hover:opacity-60"}  
+                            ${selectedAnswer !== null && selectedAnswer === question.correctAnswer && selectedAnswer === key && "border-green-200 bg-green-100"}
+                            ${selectedAnswer !== null && selectedAnswer !== question.correctAnswer && selectedAnswer === key && "border-red-200 bg-red-100"}
                             
                             `
                         }>

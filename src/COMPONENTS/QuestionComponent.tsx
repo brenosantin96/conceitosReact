@@ -14,13 +14,16 @@ export const QuestionComponent = ({ question, count, onAnswer }: Props) => {
     const checkQuestion = (key: number) => {
         if (selectedAnswer === null) {
             setSelectedAnswer(key);
-            onAnswer(key);
+            setTimeout(() => {
+                onAnswer(key);
+                setSelectedAnswer(null);
+            }, 1000)
         }
     }
 
     return (
         <div>
-            <div className='ml-2 my-2 text-lg font-semibold'>{`${count}. ${question.question}`}</div>
+            <div className='px-2 ml-2 my-2 text-lg font-semibold'>{`${count}. ${question.question}`}</div>
             <div>
                 {question.options.map((item, key) => (
                     <div key={key}

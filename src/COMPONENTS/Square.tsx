@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Square = () => {
+
+    useEffect(() => {
+        console.log("Rodou o effect do quadrado");
+
+        return () => {
+            console.log("RODOU O CLEANUP")
+        }
+        
+    }, [])
+
     return (
-        <div className='flex items-center justify-center w-52 h-52 bg-orange-700 text-white m-1'>
-            Texto qualquer inspirador
+        <div className='w-40 h-40 bg-red-400'>
+
         </div>
     )
 }
