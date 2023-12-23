@@ -55,7 +55,7 @@ export const listReducer = (list: Item[], action: ListActions) => {
             })
 
         case 'remove':
-            return list.filter((itemList) => itemList.id === action.payload.id);
+            return list.filter((itemList) => itemList.id !== action.payload.id);
 
         default:
             return list
