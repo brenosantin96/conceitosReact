@@ -1,77 +1,82 @@
 "use client"
+import { Header } from '@/COMPONENTS/Header'
+import { useRouter } from 'next/navigation'
+import { usersList } from '../data/DataUsers';
+import React, { useContext, useEffect, useState } from 'react'
+import { User } from '@/types/User';
+import { UserContext } from '@/contexts/UserContext';
 
-import Square from '@/COMPONENTS/Square';
-import { TodoComponent } from '@/COMPONENTS/TodoComponent';
-import { listReducer } from '@/reducers/listReducer';
-import { Item } from '@/types/Item';
-import React, { useEffect, useReducer, useState } from 'react'
 
 const Page = () => {
 
-    const [list, dispatch] = useReducer(listReducer, []);
+    const [users, setUsers] = useState<User[]>(usersList);
+    const [emailInput, setEmailInput] = useState("");
+    const [passwordInput, setPasswordInput] = useState("");
 
-    const [inputTodo, setInputTodo] = useState("");
+    const context = useContext(UserContext)
+    const router = useRouter();
 
 
     useEffect(() => {
-        console.log(list)
-    }, [list])
+        console.log(users)
+    }, [users])
 
 
-    const handleAddTodo = (newTodo: string) => {
-        dispatch({
-            type: 'add', payload: {
-                text: newTodo
+    const handleLogin = async (email: string, password: string) => {
+
+        if (context) {
+
+            let logged = await context.signIn(emailInput, passwordInput)
+
+            if (logged) {
+                router.push("/userLogged");
+                setEmailInput("");
+                setPasswordInput("");
+            } else {
+                setEmailInput("");
+                setPasswordInput("");
+                return;
             }
-        })
-    }
+        }
 
-    const handleEdit = (id: number, newText: string) => {
-        dispatch({
-            type: 'editText', payload: {
-                id: id,
-                newText: newText
-            }
-        })
-    }
 
-    const handleToggle = (id: number) => {
-        dispatch({
-            type: 'toggleDone', payload: {
-                id: id
-            }
-        })
-    }
+        const user = users.find((user) => user.email === email);
 
-    const handleDelete = (id: number) => {
-        dispatch({
-            type: 'remove', payload: {
-                id: id
+        if (user) {
+            if (user.password === password) {
+                router.push("/userLogged")
+            } else {
+                alert("Password incorreto")
+                setEmailInput("");
+                setPasswordInput("");
             }
-        })
+        } else {
+            alert("Usuario nao existe")
+            setEmailInput("");
+            setPasswordInput("");
+        }
+
     }
 
 
     return (
-        <div className='bg-orange-400 h-screen w-screen'>
-            <div className='container mx-auto border h-screen w-full flex flex-col justify-center items-center'>
-                Lista de Tarefas
-                <div className='max-w-md p-2 border-2 border-slate-500'>
-                    <div>
-                        <input onChange={(e) => setInputTodo(e.target.value)} type="text" />
-                        <button onClick={() => handleAddTodo(inputTodo)} className='p-2 mx-2 border-slate-300 bg-slate-200 rounded-md text-black font-semibold'>Adicionar Tarefa</button>
+        <div className='bg-sky-800'>
+            <div className='container h-screen mx-auto flex flex-col justify-center items-center'>
+                <h1 className=' text-white font-bold text-3xl'>LOGIN</h1>
+                <div className='max-w-md'>
+                    <div className='my-3 flex flex-col'>
+                        <label htmlFor="email" className='text-2xl mr-5 text-white'>Email: </label>
+                        <input className='h-9 rounded-md px-2' id='email' name='email' type="text" onChange={(text) => setEmailInput(text.target.value)} />
                     </div>
-                    <ul>
-                        {list.map((item) => (
-                            <TodoComponent key={item.id} id={item.id} text={item.text} done={item.done}
-                                handleToggle={() => handleToggle(item.id)}
-                                handleEdit={() => handleEdit(item.id, inputTodo)}
-                                handleExclude={() => handleDelete(item.id)} />
-                        ))}
-                    </ul>
+                    <div className='my-3 flex flex-col'>
+                        <label htmlFor="password" className='text-2xl mr-5 text-white'>Password: </label>
+                        <input className='h-9 rounded-md px-2' id='password' name='password' type="password" onChange={(text) => setPasswordInput(text.target.value)} />
+                    </div>
+                    <button className='bg-blue-500 text-white rounded-md p-2 w-full mt-3' onClick={() => handleLogin(emailInput, passwordInput)}>Entrar</button>
                 </div>
             </div>
         </div>
+
     )
 }
 
